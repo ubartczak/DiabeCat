@@ -21,7 +21,7 @@ const UserSchema: Schema = new Schema({
 	email: {
 		type: String,
 		required: true,
-		unique: true, // Email musi być unikalny
+		unique: true,
 		lowercase: true,
 		trim: true,
 	},
@@ -31,7 +31,6 @@ const UserSchema: Schema = new Schema({
 	},
 })
 
-// Sprawdź, czy model jest już zarejestrowany (Next.js może załadować plik wielokrotnie)
 const User = mongoose.models.User || mongoose.model<IUser>("User", UserSchema)
 
 export default User

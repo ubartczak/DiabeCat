@@ -1,4 +1,7 @@
+import { faPaw } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
+	Alert,
 	Avatar,
 	Box,
 	Button,
@@ -73,10 +76,21 @@ const Register = () => {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div>
-				<Avatar>{/* <LockOutlinedIcon /> */}</Avatar>
-				<Typography component="h1" variant="h5">
-					register
-				</Typography>
+				<Box display="flex" justifyContent="center" mb={2} mt={4}>
+					<Avatar>
+						<FontAwesomeIcon icon={faPaw} />
+					</Avatar>
+				</Box>
+				<Box display="flex" justifyContent="center" mb={2}>
+					<Typography component="h1" variant="h5">
+						register
+					</Typography>
+				</Box>
+				{error && (
+					<Alert severity="error" sx={{ mt: 2, mb: 2 }}>
+						{error}
+					</Alert>
+				)}
 				<form noValidate>
 					<TextField
 						variant="outlined"
@@ -133,10 +147,6 @@ const Register = () => {
 						type="password"
 						id="repeatPassword"
 						onChange={handleChange}
-					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="remember me"
 					/>
 					<Button
 						type="submit"

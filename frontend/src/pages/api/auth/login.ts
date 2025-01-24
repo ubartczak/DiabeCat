@@ -1,10 +1,8 @@
-// backend/pages/api/auth/login.ts
-
 import type { NextApiRequest, NextApiResponse } from "next"
-import User from "../../models/User"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import dbConnect from "../../utils/dbConnect"
+import dbConnect from "@/utils/dbConnect"
+import User from "@/models/User"
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== "POST") {
@@ -16,19 +14,16 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		await dbConnect()
 
-		// Sprawdź, czy użytkownik istnieje
 		const user = await User.findOne({ email })
 		if (!user) {
-			return res.status(400).json({ message: "Invalid credentials" })
+			return res.status(401).json({ error: "User does not exist" })
 		}
 
-		// Porównaj hasło
 		const isPasswordValid = await bcrypt.compare(password, user.password)
 		if (!isPasswordValid) {
-			return res.status(400).json({ message: "Invalid credentials" })
+			return res.status(401).json({ error: "Invalid email or password" })
 		}
 
-		// Utwórz JWT
 		const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
 			expiresIn: "1h",
 		})

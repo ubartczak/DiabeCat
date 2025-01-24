@@ -13,16 +13,13 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		await dbConnect()
 
-		// Sprawdź, czy użytkownik już istnieje
 		const existingUser = await User.findOne({ email })
 		if (existingUser) {
 			return res.status(400).json({ message: "User already exists" })
 		}
 
-		// Haszowanie hasła
 		const hashedPassword = await bcrypt.hash(password, 12)
 
-		// Tworzenie nowego użytkownika
 		const user = new User({
 			firstName,
 			lastName,
