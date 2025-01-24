@@ -1,0 +1,54 @@
+# Systemowe pliki i foldery
+.DS_Store
+Thumbs.db
+
+# Pliki konfiguracyjne IDE
+.idea/
+.vscode/
+*.swp
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Typy TypeScript
+*.tsbuildinfo
+
+# Pliki buildów
+/.next/
+/out/
+
+# Zależności i pliki pakietów
+package-lock.json
+yarn.lock
+
+# Środowisko
+.env
+.env.local
+.env.*.local
+
+# ESLint cache
+.eslintcache
+
+# Prettier
+.prettierignore
+
+# Pliki testowe
+coverage/
+
+# Pliki dla MacOS
+*.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
+*.swp
+*.swo
+*.orig
+
+# Pliki specyficzne dla OS
+.Trash-*
