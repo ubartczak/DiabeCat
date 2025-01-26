@@ -49,15 +49,17 @@ const Chart = ({ data }: ChartProps) => {
 			},
 			title: {
 				display: true,
-				text: "Wykres danych",
+				text: "Results chart",
 			},
 		},
 	}
 
 	return (
-		<div style={{ width: "80%", height: "400px", margin: "auto" }}>
-			<Line data={chartData} options={options} />
-		</div>
+		<>
+			<div style={{ width: "80%", height: "400px", margin: "auto" }}>
+				<Line data={chartData} options={options} />
+			</div>
+		</>
 	)
 }
 

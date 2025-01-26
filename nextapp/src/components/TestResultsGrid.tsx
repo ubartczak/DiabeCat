@@ -1,8 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { AgGridReact } from "ag-grid-react"
-import "ag-grid-community/styles/ag-theme-alpine.css"
-import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community"
+import "ag-grid-community/styles/ag-theme-quartz.css"
+import {
+	AllCommunityModule,
+	ColDef,
+	GridOptions,
+	ModuleRegistry,
+	RowSelectionOptions,
+	themeQuartz,
+} from "ag-grid-community"
 import { ITestResult } from "@/models/TestResult"
+import "./TestResultsGrid.css"
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -11,13 +19,37 @@ const TestResultsGrid = () => {
 
 	const columns: ColDef[] = useMemo(
 		() => [
-			{ headerName: "ID", field: "id" },
-			{ headerName: "Date", field: "date" },
-			{ headerName: "Value", field: "value" },
-			{ headerName: "Author", field: "author" },
+			{ headerName: "id", field: "id" },
+			{
+				headerName: "date",
+				field: "date",
+				valueFormatter: (params) =>
+					new Date(params.value).toLocaleDateString("pl-PL"),
+			},
+			{
+				headerName: "value",
+				field: "value",
+			},
+			{ headerName: "author", field: "author" },
 		],
 		[],
 	)
+
+	const rowSelection: RowSelectionOptions = useMemo(() => {
+		return {
+			mode: "multiRow",
+			checkboxes: true,
+			headerCheckbox: true,
+			enableClickSelection: true,
+		}
+	}, [])
+
+	const myTheme = themeQuartz.withParams({
+		fontFamily: "ubuntu",
+		headerFontFamily: "ubuntu",
+		cellFontFamily: "ubuntu",
+		textColor: "#303030",
+	})
 
 	const fetchData = async () => {
 		try {
@@ -38,11 +70,14 @@ const TestResultsGrid = () => {
 	}, [])
 
 	return (
-		<div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
+		<div style={{ height: 400, width: "100%" }}>
 			<AgGridReact
 				columnDefs={columns}
 				rowData={rowData}
 				pagination={true}
+				theme={myTheme}
+				rowSelection={rowSelection}
+				// onSelectionChanged={handleSelectionChanged}
 			/>
 		</div>
 	)

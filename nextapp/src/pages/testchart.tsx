@@ -15,18 +15,15 @@ const TestChart = () => {
 		fetchData()
 	}, [])
 
-	if (!data) {
-		return <div>Loading...</div>
-	}
-
 	return (
-		<Layout>
-			<div>
-				<h1>Test chart</h1>
-
-				<Chart data={data} />
-			</div>
-		</Layout>
+		<>
+			<Layout>
+				<div>
+					<h1>Test chart</h1>
+					<Chart data={data ?? []} />
+				</div>
+			</Layout>
+		</>
 	)
 }
 

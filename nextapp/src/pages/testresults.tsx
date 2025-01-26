@@ -1,8 +1,10 @@
 import Layout from "@/components/Layout"
+import { MyButton } from "@/components/MyButton"
 import { SnackbarAlert } from "@/components/SnackbarAlert"
 import TestResultsGrid from "@/components/TestResultsGrid"
 import { ITestResult } from "@/models/TestResult"
 import {
+	Box,
 	Button,
 	Dialog,
 	DialogActions,
@@ -73,26 +75,81 @@ const TestResults = () => {
 			setError(data.message)
 		}
 	}
+
+	const handleEditResult = async (testresult?: Partial<ITestResult>) => {
+		// const payload = {
+		// 	id: id,
+		// 	value: testresult.value as number,
+		// 	date: testresult.date,
+		// 	author: testresult.author,
+		// } as ITestResult
+		// const response = await fetch("/api/results/editResults", {
+		// 	method: "POST",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 	},
+		// 	body: JSON.stringify(payload),
+		// })
+		// if (response.ok) {
+		// 	setOpenSB(true)
+		// 	setOpen(false)
+		// } else {
+		// 	const data = await response.json()
+		// 	setError(data.message)
+		// }
+	}
+
 	return (
 		<Layout>
-			<div>
-				<h1>Test Results</h1>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					textAlign: "center",
+				}}
+			>
+				<h1
+					style={{
+						textAlign: "center",
+						margin: "0 0 8px 0",
+						color: "#303030",
+					}}
+				>
+					test results
+				</h1>
 				<SnackbarAlert
 					open={openSB}
 					handleClose={handleCloseSB}
-					message="Test result added"
+					message="test result added"
 					severity="success"
 				/>
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={handleOpen}
+				<Box
+					style={{
+						display: "flex",
+						gap: "8px",
+						paddingBottom: "8px",
+					}}
 				>
-					Dodaj wynik
-				</Button>
+					<MyButton
+						text="add result"
+						onClick={handleOpen}
+						color="success"
+					/>
+					<MyButton
+						text="edit result"
+						onClick={handleEditResult}
+						color="warning"
+					/>
+					<MyButton
+						text="delete result"
+						onClick={handleOpen}
+						color="error"
+					/>
+				</Box>
 				<TestResultsGrid />
 				<Dialog open={open} onClose={handleClose}>
-					<DialogTitle>Add test result</DialogTitle>
+					<DialogTitle>add test result</DialogTitle>
 					<DialogContent>
 						<TextField
 							autoFocus
