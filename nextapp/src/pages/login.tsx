@@ -1,14 +1,15 @@
+import Layout from "@/components/Layout"
+import { MyButton } from "@/components/MyButton"
+import { SnackbarAlert } from "@/components/SnackbarAlert"
 import { faPaw } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
 	Alert,
 	Avatar,
 	Box,
-	Button,
 	Checkbox,
 	CircularProgress,
 	Container,
-	CssBaseline,
 	FormControlLabel,
 	Grid2,
 	Link,
@@ -18,28 +19,18 @@ import {
 import router from "next/router"
 import React, { useState } from "react"
 
-function Copyright() {
-	return (
-		<Typography variant="body2" color="textSecondary" align="center">
-			{"copyright © "}
-			<Link color="inherit" href="https://mui.com/">
-				diabecat
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	)
-}
-
 const Login = () => {
 	const [loading, setLoading] = useState(false)
-
+	const [openSB, setOpenSB] = useState(false)
+	const [error, setError] = useState("")
 	const [form, setForm] = useState({
 		email: "",
 		password: "",
 	})
 
-	const [error, setError] = useState("")
+	const handleCloseSB = () => {
+		setOpenSB(false)
+	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setForm({
@@ -48,8 +39,7 @@ const Login = () => {
 		})
 	}
 
-	const handleLogin = async (e: React.FormEvent) => {
-		e.preventDefault()
+	const handleLogin = async () => {
 		setError("")
 		setLoading(true)
 
@@ -76,91 +66,120 @@ const Login = () => {
 		} catch (error: any) {
 			setError(error.message)
 			setLoading(false)
+			setOpenSB(true)
 		}
 	}
 
 	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div>
-				<Box display="flex" justifyContent="center" mb={2} mt={4}>
-					<Avatar>
-						<FontAwesomeIcon icon={faPaw} />
-					</Avatar>
-				</Box>
-				<Box display="flex" justifyContent="center" mb={2}>
-					<Typography component="h1" variant="h5">
-						sign in
-					</Typography>
-				</Box>
-				{error && (
-					<Alert severity="error" sx={{ mt: 2, mb: 2 }}>
-						{error}
-					</Alert>
-				)}
-				<form noValidate>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						id="email"
-						label="email address"
-						name="email"
-						autoComplete="email"
-						autoFocus
-						onChange={handleChange}
+		<>
+			<Layout>
+				<Container
+					component="main"
+					maxWidth="xs"
+					style={{ paddingBottom: "15px" }}
+				>
+					<Box display="flex" justifyContent="center" mb={1} mt={1}>
+						<Avatar>
+							<FontAwesomeIcon icon={faPaw} />
+						</Avatar>
+					</Box>
+					<Box display="flex" justifyContent="center" mb={1}>
+						<Typography
+							component="h1"
+							variant="h5"
+							style={{ fontFamily: "Ubuntu, sans-serif" }}
+						>
+							sign in
+						</Typography>
+					</Box>
+					<SnackbarAlert
+						open={openSB}
+						message={error}
+						severity="error"
+						handleClose={handleCloseSB}
 					/>
-					<TextField
-						variant="outlined"
-						margin="normal"
-						required
-						fullWidth
-						name="password"
-						label="password"
-						type="password"
-						id="password"
-						autoComplete="current-password"
-						onChange={handleChange}
-					/>
-					<FormControlLabel
-						control={<Checkbox value="remember" color="primary" />}
-						label="remember me"
-					/>
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						onClick={handleLogin}
-						disabled={loading}
-					>
-						{loading ? (
-							<CircularProgress
-								size={24}
-								sx={{ color: "white", mr: 1 }}
-							/>
-						) : null}
-						Sign In
-					</Button>
-					<Grid2 container columnGap={2}>
-						<Grid2>
-							<Link href="#" variant="body2">
-								forgot password?
-							</Link>
+					<form noValidate>
+						<TextField
+							size="small"
+							variant="standard"
+							margin="normal"
+							required
+							fullWidth
+							id="email"
+							label="email address"
+							name="email"
+							autoComplete="email"
+							autoFocus
+							onChange={handleChange}
+							style={{ fontFamily: "Ubuntu, sans-serif" }}
+						/>
+						<TextField
+							size="small"
+							variant="standard"
+							margin="normal"
+							required
+							fullWidth
+							name="password"
+							label="password"
+							type="password"
+							id="password"
+							autoComplete="current-password"
+							onChange={handleChange}
+							style={{ fontFamily: "Ubuntu, sans-serif" }}
+						/>
+						{/* <FormControlLabel
+							control={
+								<Checkbox value="remember" color="primary" />
+							}
+							label="remember me"
+						/> */}
+						<MyButton
+							text="sign in"
+							onClick={handleLogin}
+							disabled={loading}
+							fullWidth
+							disableTouchRipple
+						>
+							{loading ? (
+								<CircularProgress
+									size={24}
+									sx={{ color: "white", mr: 1 }}
+								/>
+							) : null}
+						</MyButton>
+						<Grid2
+							container
+							columnGap={2}
+							style={{
+								justifyContent: "space-around",
+								paddingTop: "8px",
+							}}
+						>
+							<Grid2>
+								<Link
+									href="#"
+									variant="body2"
+									underline="hover"
+									style={{ fontFamily: "Ubuntu, sans-serif" }}
+								>
+									forgot password?
+								</Link>
+							</Grid2>
+							<Grid2>
+								<Link
+									href="/register"
+									variant="body2"
+									underline="hover"
+									style={{ fontFamily: "Ubuntu, sans-serif" }}
+								>
+									{"don't have an account? sign up"}
+								</Link>
+							</Grid2>
 						</Grid2>
-						<Grid2>
-							<Link href="/register" variant="body2">
-								{"don't have an account? sign up"}
-							</Link>
-						</Grid2>
-					</Grid2>
-				</form>
-			</div>
-			<Box mt={8}>
-				<Copyright />
-			</Box>
-		</Container>
+					</form>
+				</Container>
+			</Layout>
+		</>
 	)
 }
 

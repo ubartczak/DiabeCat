@@ -70,7 +70,7 @@ const Header = () => {
 						<img
 							src={"/images/cat1.png"}
 							alt="logo-diabecat"
-							height="30px"
+							height="40px"
 						/>
 					</Link>
 					<Typography
@@ -95,8 +95,15 @@ const Header = () => {
 						alignItems: "center",
 						backgroundColor: "#d7d7e3",
 						borderRadius: "20px",
+						boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+						zIndex: 2,
 					}}
 				>
+					<Link href="/cats" passHref>
+						<Button sx={getButtonStyle("/cats")} disableTouchRipple>
+							cats
+						</Button>
+					</Link>
 					<Link href="/testresults" passHref>
 						<Button
 							sx={getButtonStyle("/testresults")}
@@ -113,9 +120,12 @@ const Header = () => {
 							charts
 						</Button>
 					</Link>
-					<Link href="/scheduler" passHref>
-						<Button sx={getButtonStyle("/scheduler")}>
-							schedules
+					<Link href="/calendar" passHref>
+						<Button
+							sx={getButtonStyle("/calendar")}
+							disableTouchRipple
+						>
+							calendar
 						</Button>
 					</Link>
 				</Box>

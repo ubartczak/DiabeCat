@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap&subset=latin,latin-ext');
+
+input::placeholder {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    /* color: rgba(0, 0, 0, 0.6) */
+}
+
+input::first-line {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+}

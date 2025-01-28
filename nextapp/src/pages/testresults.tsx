@@ -10,10 +10,9 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	Snackbar,
+	InputBase,
 	TextField,
 } from "@mui/material"
-import { set } from "mongoose"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
@@ -169,6 +168,7 @@ const TestResults = () => {
 							name="date"
 							value={form?.date}
 							onChange={handleChange}
+							slotProps={{ inputLabel: { shrink: true } }}
 						/>
 						<TextField
 							margin="dense"
