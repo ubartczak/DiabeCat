@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout"
-import { Box, Input, TextField } from "@mui/material"
+import { Box } from "@mui/material"
 import "../components/Components.css"
 import { CustomTextField } from "@/components/CustomTextField"
 
@@ -15,37 +15,35 @@ const Cats = () => {
 			<Layout>
 				<Box
 					sx={{
-						display: "flex", // Flexbox
-						flexDirection: "row", // Ustawia elementy w rzędzie
-						justifyContent: "space-between", // Rozkłada elementy równomiernie
-						alignItems: "stretch", // Rozciąga elementy, aby miały tę samą wysokość
-						padding: 2, // Dodaje odstępy
-						gap: 2, // Dodaje odstęp między elementami
-						height: "auto", // Można zmienić na konkretną wartość, np. 600px
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "space-between",
+						alignItems: "stretch",
+						padding: 2,
+						gap: 2,
+						height: "auto",
 					}}
 				>
-					{/* Box ze zdjęciem */}
 					<Box
 						width={"30%"}
 						display={"flex"}
 						justifyContent={"center"}
 						alignItems={"center"}
 						sx={{
-							height: "100%", // Rozciągnij na całą wysokość nadrzędnego kontenera
-							backgroundColor: "#f0f0f0", // Opcjonalne tło dla wyrównania proporcji
+							height: "100%",
+							backgroundColor: "#f0f0f0",
 						}}
 					>
 						<img
 							src="/images/cat2.jpg"
 							alt="cat"
 							style={{
-								maxHeight: "100%", // Dopasuj wysokość obrazu do kontenera
-								maxWidth: "100%", // Dopasuj szerokość obrazu do kontenera
-								objectFit: "contain", // Dostosowuje proporcje zdjęcia
+								maxHeight: "100%",
+								maxWidth: "100%",
+								objectFit: "contain",
 							}}
 						/>
 					</Box>
-
 					<Box
 						sx={{
 							width: "100%",

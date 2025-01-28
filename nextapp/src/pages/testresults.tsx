@@ -31,10 +31,6 @@ const TestResults = () => {
 		setOpen(false)
 	}
 
-	const handleOpenSB = () => {
-		setOpenSB(true)
-	}
-
 	const handleCloseSB = () => {
 		setOpenSB(false)
 	}
@@ -75,28 +71,7 @@ const TestResults = () => {
 		}
 	}
 
-	const handleEditResult = async (testresult?: Partial<ITestResult>) => {
-		// const payload = {
-		// 	id: id,
-		// 	value: testresult.value as number,
-		// 	date: testresult.date,
-		// 	author: testresult.author,
-		// } as ITestResult
-		// const response = await fetch("/api/results/editResults", {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	body: JSON.stringify(payload),
-		// })
-		// if (response.ok) {
-		// 	setOpenSB(true)
-		// 	setOpen(false)
-		// } else {
-		// 	const data = await response.json()
-		// 	setError(data.message)
-		// }
-	}
+	const handleEditResult = async (testresult?: Partial<ITestResult>) => {}
 
 	return (
 		<Layout>

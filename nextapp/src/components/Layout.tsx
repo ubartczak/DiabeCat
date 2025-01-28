@@ -11,7 +11,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 					padding: "0 24px",
 					backgroundColor: "#d7d7e3",
 					fontFamily: "Ubuntu, sans-serif",
-					// minHeight: "100vh",
 				}}
 			>
 				<Header />

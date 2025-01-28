@@ -4,7 +4,6 @@ import "ag-grid-community/styles/ag-theme-quartz.css"
 import {
 	AllCommunityModule,
 	ColDef,
-	GridOptions,
 	ModuleRegistry,
 	RowSelectionOptions,
 	themeQuartz,
@@ -77,7 +76,6 @@ const TestResultsGrid = () => {
 				pagination={true}
 				theme={myTheme}
 				rowSelection={rowSelection}
-				// onSelectionChanged={handleSelectionChanged}
 			/>
 		</div>
 	)

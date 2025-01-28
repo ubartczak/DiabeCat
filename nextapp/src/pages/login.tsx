@@ -4,13 +4,10 @@ import { SnackbarAlert } from "@/components/SnackbarAlert"
 import { faPaw } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
-	Alert,
 	Avatar,
 	Box,
-	Checkbox,
 	CircularProgress,
 	Container,
-	FormControlLabel,
 	Grid2,
 	Link,
 	TextField,
