@@ -1,10 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose"
 
-export interface ITestResult extends Document {
+export interface ITestResult {
 	id: string
 	value: number
 	date: Date
-	author: string
+}
+
+export interface IUserTestResults extends Document {
+	email: string
+	results: ITestResult[]
 }
 
 const TestResultSchema: Schema = new Schema({
@@ -12,27 +16,24 @@ const TestResultSchema: Schema = new Schema({
 		type: String,
 		required: true,
 		trim: true,
-		unique: true,
 	},
 	value: {
 		type: Number,
 		required: true,
-		trim: true,
 	},
 	date: {
 		type: Date,
 		required: true,
-		trim: true,
-	},
-	author: {
-		type: String,
-		required: true,
-		trim: true,
 	},
 })
 
-const TestResult =
-	mongoose.models.TestResult ||
-	mongoose.model<ITestResult>("TestResult", TestResultSchema)
+const UserTestResultsSchema: Schema = new Schema({
+	email: { type: String, required: true, unique: true },
+	results: { type: [TestResultSchema], default: [] },
+})
 
-export default TestResult
+const UserTestResults =
+	mongoose.models.UserTestResults ||
+	mongoose.model<IUserTestResults>("UserTestResults", UserTestResultsSchema)
+
+export default UserTestResults

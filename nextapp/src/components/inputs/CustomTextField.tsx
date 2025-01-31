@@ -15,23 +15,30 @@ interface ITextFieldProps {
 	select?: boolean
 	multiline?: boolean
 	rows?: number
+	name?: string
+	margin?: string
+	children?: React.ReactNode
+	value?: string | boolean | number
 }
 
 export const CustomTextField = (props: ITextFieldProps) => {
 	return (
 		<TextField
 			id={props.id}
+			name={props.name}
 			onChange={props.onChange}
 			variant={props.variant ?? "standard"}
 			fullWidth={props.fullWidth ?? true}
 			type={props.type ?? "text"}
 			select={props.select}
+			value={props.value}
 			multiline={props.multiline}
 			rows={props.rows}
 			style={{
 				backgroundColor: props.backgroundColor ?? "#d7d7e3",
 				borderRadius: props.borderRadius ?? "20px",
-				padding: props.padding ?? "4px 8px",
+				padding: props.padding,
+				margin: props.margin,
 				fontFamily: "Ubuntu, sans-serif",
 				fontSize: props.fontSize ?? "14px",
 				color: "#303030",
@@ -40,6 +47,8 @@ export const CustomTextField = (props: ITextFieldProps) => {
 			slotProps={{
 				input: { disableUnderline: true },
 			}}
-		/>
+		>
+			{props.children}
+		</TextField>
 	)
 }

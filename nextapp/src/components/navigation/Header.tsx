@@ -29,6 +29,7 @@ const Header = () => {
 	}
 
 	const handleLogout = () => {
+		console.log("logout")
 		localStorage.removeItem("token")
 		router.push("/login")
 	}
@@ -98,12 +99,12 @@ const Header = () => {
 						zIndex: 2,
 					}}
 				>
-					<Link href="/cats" passHref>
+					<Link href="/cats">
 						<Button sx={getButtonStyle("/cats")} disableTouchRipple>
 							cats
 						</Button>
 					</Link>
-					<Link href="/testresults" passHref>
+					<Link href="/testresults">
 						<Button
 							sx={getButtonStyle("/testresults")}
 							disableTouchRipple
@@ -111,7 +112,7 @@ const Header = () => {
 							results
 						</Button>
 					</Link>
-					<Link href="/testchart" passHref>
+					<Link href="/testchart">
 						<Button
 							sx={getButtonStyle("/testchart")}
 							disableTouchRipple
@@ -119,7 +120,7 @@ const Header = () => {
 							charts
 						</Button>
 					</Link>
-					<Link href="/calendar" passHref>
+					<Link href="/calendar">
 						<Button
 							sx={getButtonStyle("/calendar")}
 							disableTouchRipple

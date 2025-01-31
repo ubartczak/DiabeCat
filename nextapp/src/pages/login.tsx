@@ -1,6 +1,7 @@
-import Layout from "@/components/Layout"
-import { MyButton } from "@/components/MyButton"
-import { SnackbarAlert } from "@/components/SnackbarAlert"
+import { CustomTextField } from "@/components/inputs/CustomTextField"
+import Layout from "@/components/navigation/Layout"
+import { MyButton } from "@/components/inputs/MyButton"
+import { SnackbarAlert } from "@/components/feedback/SnackbarAlert"
 import { faPaw } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -10,7 +11,6 @@ import {
 	Container,
 	Grid2,
 	Link,
-	TextField,
 	Typography,
 } from "@mui/material"
 import router from "next/router"
@@ -67,13 +67,19 @@ const Login = () => {
 		}
 	}
 
+	const labelStyle = {
+		fontSize: "14px",
+		lineHeight: "30px",
+		color: "#303030",
+	}
+
 	return (
 		<>
 			<Layout>
 				<Container
 					component="main"
 					maxWidth="xs"
-					style={{ paddingBottom: "15px" }}
+					style={{ width: "100%" }}
 				>
 					<Box display="flex" justifyContent="center" mb={1} mt={1}>
 						<Avatar>
@@ -86,7 +92,7 @@ const Login = () => {
 							variant="h5"
 							style={{ fontFamily: "Ubuntu, sans-serif" }}
 						>
-							sign in
+							logowanie
 						</Typography>
 					</Box>
 					<SnackbarAlert
@@ -96,34 +102,32 @@ const Login = () => {
 						handleClose={handleCloseSB}
 					/>
 					<form noValidate>
-						<TextField
-							size="small"
-							variant="standard"
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label="email address"
-							name="email"
-							autoComplete="email"
-							autoFocus
-							onChange={handleChange}
-							style={{ fontFamily: "Ubuntu, sans-serif" }}
-						/>
-						<TextField
-							size="small"
-							variant="standard"
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-							onChange={handleChange}
-							style={{ fontFamily: "Ubuntu, sans-serif" }}
-						/>
+						<Box>
+							<label htmlFor="email" style={labelStyle}>
+								email
+							</label>
+							<CustomTextField
+								id="email"
+								name="email"
+								onChange={handleChange}
+							/>
+						</Box>
+						<Box
+							sx={{
+								width: "100%",
+								paddingBottom: "16px",
+							}}
+						>
+							<label htmlFor="password" style={labelStyle}>
+								hasło
+							</label>
+							<CustomTextField
+								id="password"
+								name="password"
+								type="password"
+								onChange={handleChange}
+							/>
+						</Box>
 						{/* <FormControlLabel
 							control={
 								<Checkbox value="remember" color="primary" />
@@ -131,7 +135,7 @@ const Login = () => {
 							label="remember me"
 						/> */}
 						<MyButton
-							text="sign in"
+							text="zaloguj się"
 							onClick={handleLogin}
 							disabled={loading}
 							fullWidth
@@ -159,7 +163,7 @@ const Login = () => {
 									underline="hover"
 									style={{ fontFamily: "Ubuntu, sans-serif" }}
 								>
-									forgot password?
+									zapomniałeś hasła?
 								</Link>
 							</Grid2>
 							<Grid2>
@@ -169,7 +173,7 @@ const Login = () => {
 									underline="hover"
 									style={{ fontFamily: "Ubuntu, sans-serif" }}
 								>
-									{"don't have an account? sign up"}
+									{"nie masz konta? zarejestruj się"}
 								</Link>
 							</Grid2>
 						</Grid2>

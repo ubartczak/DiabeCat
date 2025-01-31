@@ -1,7 +1,7 @@
-import Layout from "@/components/Layout"
-import { MyButton } from "@/components/MyButton"
-import { SnackbarAlert } from "@/components/SnackbarAlert"
-import TestResultsGrid from "@/components/TestResultsGrid"
+import Layout from "@/components/navigation/Layout"
+import { MyButton } from "@/components/inputs/MyButton"
+import { SnackbarAlert } from "@/components/feedback/SnackbarAlert"
+import TestResultsGrid from "@/components/data_display/TestResultsGrid"
 import { ITestResult } from "@/models/TestResult"
 import {
 	Box,
@@ -10,11 +10,13 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	InputBase,
 	TextField,
 } from "@mui/material"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+
+// TO DO - obsługa błędów i loadingów
+// TO DO - obsługa edycji i usuwania wyników
 
 const TestResults = () => {
 	const [error, setError] = useState("")
@@ -45,19 +47,24 @@ const TestResults = () => {
 	}
 
 	const handleAddResult = async (testresult: Partial<ITestResult>) => {
-		const id = uuidv4().slice(0, 5)
+		const token = localStorage.getItem("token")
+
+		if (!token) {
+			setError("User not authenticated")
+			return
+		}
 
 		const payload = {
-			id: id,
+			id: uuidv4().slice(0, 5),
 			value: testresult.value as number,
 			date: testresult.date,
-			author: testresult.author,
-		} as ITestResult
+		}
 
 		const response = await fetch("/api/results/addResults", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(payload),
 		})
@@ -144,15 +151,6 @@ const TestResults = () => {
 							value={form?.date}
 							onChange={handleChange}
 							slotProps={{ inputLabel: { shrink: true } }}
-						/>
-						<TextField
-							margin="dense"
-							label="Author"
-							type="text"
-							fullWidth
-							name="author"
-							value={form?.author}
-							onChange={handleChange}
 						/>
 					</DialogContent>
 					<DialogActions>

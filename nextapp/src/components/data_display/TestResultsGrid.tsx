@@ -8,13 +8,14 @@ import {
 	RowSelectionOptions,
 	themeQuartz,
 } from "ag-grid-community"
-import { ITestResult } from "@/models/TestResult"
 import "./TestResultsGrid.css"
+import { SnackbarAlert } from "../feedback/SnackbarAlert"
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
 const TestResultsGrid = () => {
-	const [rowData, setRowData] = useState<ITestResult[]>([])
+	const [rowData, setRowData] = useState<any[]>([])
+	const [openSnackbar, setOpenSnackbar] = useState(false)
 
 	const columns: ColDef[] = useMemo(
 		() => [
@@ -29,7 +30,6 @@ const TestResultsGrid = () => {
 				headerName: "value",
 				field: "value",
 			},
-			{ headerName: "author", field: "author" },
 		],
 		[],
 	)
@@ -52,13 +52,32 @@ const TestResultsGrid = () => {
 
 	const fetchData = async () => {
 		try {
-			const response = await fetch("/api/results/getAllResults")
-			if (response.ok) {
-				const data = await response.json()
-				setRowData(data)
-			} else {
-				console.error("Failed to fetch data")
+			const token = localStorage.getItem("token")
+			if (!token) {
+				setOpenSnackbar(true)
 			}
+
+			const response = await fetch("/api/results/getAllResults", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			})
+
+			if (!response.ok) {
+				console.error("Failed to fetch data")
+				return
+			}
+
+			const data = await response.json()
+
+			if (!Array.isArray(data)) {
+				console.error("Invalid data format", data)
+				return
+			}
+
+			setRowData(data)
 		} catch (error) {
 			console.error("Error fetching data: ", error)
 		}
@@ -70,6 +89,11 @@ const TestResultsGrid = () => {
 
 	return (
 		<div style={{ height: 400, width: "100%" }}>
+			<SnackbarAlert
+				open={openSnackbar}
+				message="Brak autoryzacji"
+				severity="error"
+			/>
 			<AgGridReact
 				columnDefs={columns}
 				rowData={rowData}

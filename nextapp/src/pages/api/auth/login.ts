@@ -10,6 +10,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	const { email, password } = req.body
+	console.log(email, password)
 
 	try {
 		await dbConnect()
@@ -24,9 +25,11 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
 			return res.status(401).json({ error: "Invalid email or password" })
 		}
 
-		const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
-			expiresIn: "1h",
-		})
+		const token = jwt.sign(
+			{ userId: user._id, email: user.email },
+			process.env.JWT_SECRET!,
+			{ expiresIn: "72h" },
+		)
 
 		return res.status(200).json({ token })
 	} catch (error) {

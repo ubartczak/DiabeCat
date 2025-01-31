@@ -1,12 +1,12 @@
 import mongoose from "mongoose"
 
 const dbConnect = async () => {
-	console.log("dbConnect: Function called")
 	if (mongoose.connection.readyState >= 1) {
+		console.log("dbConnect: already connected")
 		return
 	}
 	try {
-		const uri = "mongodb://localhost:27017/diabecat"
+		const uri = "mongodb://localhost:27018/diabecat"
 		await mongoose.connect(uri)
 		console.log("Connected to MongoDB")
 	} catch (error) {

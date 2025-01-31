@@ -46,20 +46,58 @@ const Chart = ({ data }: ChartProps) => {
 		plugins: {
 			legend: {
 				position: "top",
+				labels: {
+					font: {
+						size: 14,
+					},
+					color: "#303030",
+				},
 			},
 			title: {
 				display: true,
-				text: "Results chart",
+				text: "Test Results Chart",
+				font: {
+					size: 18,
+					weight: "bold",
+				},
+				color: "#303030",
+				padding: {
+					top: 20,
+					bottom: 30,
+				},
+			},
+		},
+		scales: {
+			x: {
+				title: {
+					display: true,
+					text: "Date",
+					font: {
+						size: 14,
+						weight: "bold",
+					},
+					color: "#303030",
+				},
+			},
+			y: {
+				title: {
+					display: true,
+					text: "Value",
+					font: {
+						size: 14,
+						weight: "bold",
+					},
+					color: "#303030",
+				},
+				beginAtZero: true,
 			},
 		},
 	}
 
 	return (
-		<>
-			<div style={{ width: "80%", height: "400px", margin: "auto" }}>
-				<Line data={chartData} options={options} />
-			</div>
-		</>
+		<div style={{ width: "80%", height: "400px", margin: "auto" }}>
+			<Line data={chartData} options={options} />
+		</div>
 	)
 }
 

@@ -1,26 +1,30 @@
-import TestResult from "@/models/TestResult"
+import UserTestResults from "@/models/TestResult"
 import dbConnect from "@/utils/dbConnect"
-import type { NextApiRequest, NextApiResponse } from "next"
+import type { NextApiResponse } from "next"
+import withAuthHandler, { AuthenticatedRequest } from "@/utils/withAuthHandler"
 
-const getAllResults = async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method !== "GET") {
-		return res.status(405).json({ message: "Method not allowed" })
+const getAllResults = async (
+	req: AuthenticatedRequest,
+	res: NextApiResponse,
+) => {
+	const email = req.user?.email
+
+	if (!email) {
+		return res.status(401).json({ message: "Unauthorized" })
 	}
 
 	try {
 		await dbConnect()
+		const userResults = await UserTestResults.findOne({ email })
 
-		const results = await TestResult.find()
-
-		if (!results || results.length === 0) {
+		if (!userResults || userResults.results.length === 0) {
 			return res.status(404).json({ message: "No results found" })
 		}
-
-		return res.status(200).json(results)
+		return res.status(200).json(userResults.results)
 	} catch (error) {
 		console.error(error)
 		return res.status(500).json({ message: "Server error" })
 	}
 }
 
-export default getAllResults
+export default withAuthHandler(getAllResults, ["GET"])

@@ -2,7 +2,7 @@ import { Snackbar, Alert } from "@mui/material"
 
 interface SnackbarAlertProps {
 	open: boolean
-	handleClose: () => void
+	handleClose?: () => void
 	message: string
 	severity: "success" | "info" | "warning" | "error"
 }

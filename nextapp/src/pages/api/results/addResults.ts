@@ -1,29 +1,26 @@
-import TestResult from "@/models/TestResult"
+import UserTestResults from "@/models/TestResult"
 import dbConnect from "@/utils/dbConnect"
-import type { NextApiRequest, NextApiResponse } from "next"
+import type { NextApiResponse } from "next"
+import withAuthHandler, { AuthenticatedRequest } from "@/utils/withAuthHandler"
 
-const addResult = async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method !== "POST") {
-		return res.status(405).json({ message: "Method not allowed" })
+const addResult = async (req: AuthenticatedRequest, res: NextApiResponse) => {
+	const { id, value, date } = req.body
+	const email = req.user?.email
+
+	if (!email) {
+		return res.status(401).json({ message: "Unauthorized" })
 	}
-
-	const { id, value, date, author } = req.body
 
 	try {
 		await dbConnect()
+		let userTestResults = await UserTestResults.findOne({ email })
 
-		const existingResult = await TestResult.findOne({ id })
-		if (existingResult) {
-			return res.status(400).json({ message: "Result already exists" })
+		if (!userTestResults) {
+			userTestResults = new UserTestResults({ email, results: [] })
 		}
 
-		const testResult = new TestResult({
-			id,
-			value,
-			date,
-			author,
-		})
-		await testResult.save()
+		userTestResults.results.push({ id, value, date })
+		await userTestResults.save()
 
 		return res.status(201).json({ message: "Test result added" })
 	} catch (error) {
@@ -32,4 +29,4 @@ const addResult = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 }
 
-export default addResult
+export default withAuthHandler(addResult, ["POST"])
