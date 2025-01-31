@@ -1,5 +1,5 @@
 import Layout from "@/components/navigation/Layout"
-import { MyButton } from "@/components/inputs/MyButton"
+import { MyButton } from "@/components/inputs/CustomButton"
 import { SnackbarAlert } from "@/components/feedback/SnackbarAlert"
 import TestResultsGrid from "@/components/data_display/TestResultsGrid"
 import { ITestResult } from "@/models/TestResult"
@@ -19,10 +19,10 @@ import { v4 as uuidv4 } from "uuid"
 // TO DO - obsługa edycji i usuwania wyników
 
 const TestResults = () => {
-	const [error, setError] = useState("")
 	const [open, setOpen] = useState(false)
-	const [openSB, setOpenSB] = useState(false)
 	const [form, setForm] = useState<Partial<ITestResult>>()
+	const [error, setError] = useState("")
+	const [openSB, setOpenSB] = useState(false)
 	const [loading, setLoading] = useState(false)
 
 	const handleOpen = () => {
@@ -47,6 +47,7 @@ const TestResults = () => {
 	}
 
 	const handleAddResult = async (testresult: Partial<ITestResult>) => {
+		setLoading(true)
 		const token = localStorage.getItem("token")
 
 		if (!token) {
@@ -72,16 +73,18 @@ const TestResults = () => {
 		if (response.ok) {
 			setOpenSB(true)
 			setOpen(false)
+			setLoading(false)
 		} else {
 			const data = await response.json()
 			setError(data.message)
+			setLoading(false)
 		}
 	}
 
 	const handleEditResult = async (testresult?: Partial<ITestResult>) => {}
 
 	return (
-		<Layout>
+		<Layout loading={loading}>
 			<div
 				style={{
 					display: "flex",
@@ -97,7 +100,7 @@ const TestResults = () => {
 						color: "#303030",
 					}}
 				>
-					test results
+					wyniki pomiarów
 				</h1>
 				<SnackbarAlert
 					open={openSB}
@@ -128,7 +131,20 @@ const TestResults = () => {
 						color="error"
 					/>
 				</Box>
-				<TestResultsGrid />
+				<Box
+					sx={{
+						minWidth: "65%",
+						maxWidth: "90%",
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "center",
+						alignItems: "stretch",
+						padding: 2,
+						gap: 2,
+					}}
+				>
+					<TestResultsGrid />
+				</Box>
 				<Dialog open={open} onClose={handleClose}>
 					<DialogTitle>add test result</DialogTitle>
 					<DialogContent>

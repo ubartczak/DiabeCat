@@ -18,7 +18,6 @@ const CatSchema: Schema = new Schema(
 		email: {
 			type: String,
 			required: true,
-			unique: true,
 		},
 		catId: {
 			type: String,

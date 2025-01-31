@@ -1,6 +1,6 @@
 import { CustomTextField } from "@/components/inputs/CustomTextField"
 import Layout from "@/components/navigation/Layout"
-import { MyButton } from "@/components/inputs/MyButton"
+import { MyButton } from "@/components/inputs/CustomButton"
 import { SnackbarAlert } from "@/components/feedback/SnackbarAlert"
 import { faPaw } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -101,7 +101,7 @@ const Register = () => {
 
 	return (
 		<>
-			<Layout>
+			<Layout loading={loading}>
 				{!error && (
 					<SnackbarAlert
 						open={openSB}
@@ -187,14 +187,7 @@ const Register = () => {
 								onChange={handleChange}
 							/>
 						</Box>
-						<Box
-						// sx={{
-						// 	display: "flex",
-						// 	justifyContent: "center",
-						// 	width: "100%",
-						// 	mt: 2,
-						// }}
-						>
+						<Box>
 							<MyButton
 								text="utwórz konto"
 								onClick={handleSubmit}

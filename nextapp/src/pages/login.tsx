@@ -1,6 +1,6 @@
 import { CustomTextField } from "@/components/inputs/CustomTextField"
 import Layout from "@/components/navigation/Layout"
-import { MyButton } from "@/components/inputs/MyButton"
+import { MyButton } from "@/components/inputs/CustomButton"
 import { SnackbarAlert } from "@/components/feedback/SnackbarAlert"
 import { faPaw } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -75,7 +75,7 @@ const Login = () => {
 
 	return (
 		<>
-			<Layout>
+			<Layout loading={loading}>
 				<Container
 					component="main"
 					maxWidth="xs"
@@ -128,7 +128,7 @@ const Login = () => {
 								onChange={handleChange}
 							/>
 						</Box>
-						{/* <FormControlLabel
+						{/* TO DO - <FormControlLabel
 							control={
 								<Checkbox value="remember" color="primary" />
 							}
