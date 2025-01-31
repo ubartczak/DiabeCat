@@ -33,8 +33,8 @@ const Chart = ({ data }: ChartProps) => {
 			{
 				label: "Values",
 				data: data.map((item) => item!.value),
-				borderColor: "rgba(75, 192, 192, 1)",
-				backgroundColor: "rgba(75, 192, 192, 0.2)",
+				borderColor: "#618833",
+				backgroundColor: "#a2cf6e",
 				fill: true,
 				tension: 0.4,
 			},

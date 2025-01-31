@@ -29,7 +29,6 @@ const Header = () => {
 	}
 
 	const handleLogout = () => {
-		console.log("logout")
 		localStorage.removeItem("token")
 		router.push("/login")
 	}
@@ -101,7 +100,7 @@ const Header = () => {
 				>
 					<Link href="/cats">
 						<Button sx={getButtonStyle("/cats")} disableTouchRipple>
-							cats
+							dane
 						</Button>
 					</Link>
 					<Link href="/testresults">
@@ -109,7 +108,7 @@ const Header = () => {
 							sx={getButtonStyle("/testresults")}
 							disableTouchRipple
 						>
-							results
+							pomiary
 						</Button>
 					</Link>
 					<Link href="/testchart">
@@ -117,7 +116,7 @@ const Header = () => {
 							sx={getButtonStyle("/testchart")}
 							disableTouchRipple
 						>
-							charts
+							wykresy
 						</Button>
 					</Link>
 					<Link href="/calendar">
@@ -125,7 +124,7 @@ const Header = () => {
 							sx={getButtonStyle("/calendar")}
 							disableTouchRipple
 						>
-							calendar
+							kalendarz
 						</Button>
 					</Link>
 				</Box>
@@ -145,8 +144,8 @@ const Header = () => {
 							"aria-labelledby": "basic-button",
 						}}
 					>
-						<MenuItem onClick={handleCloseMenu}>Moje dane</MenuItem>
-						<MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
+						<MenuItem onClick={handleCloseMenu}>moje dane</MenuItem>
+						<MenuItem onClick={handleLogout}>wyloguj</MenuItem>
 					</Menu>
 				</Box>
 			</Toolbar>

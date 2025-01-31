@@ -8,10 +8,14 @@ import { useRouter } from "next/router"
 const TestChart = () => {
 	const [data, setData] = useState<ITestResult[]>([])
 	const [openSnackbar, setOpenSnackbar] = useState(false)
+	const [loading, setLoading] = useState(true)
 	const router = useRouter()
+
+	// TO DO ujednolicić loadingi i obsługe błędów jak na innych komopnentach
 
 	useEffect(() => {
 		const fetchData = async () => {
+			setLoading(true)
 			const token = localStorage.getItem("token")
 
 			if (!token) {
@@ -36,13 +40,14 @@ const TestChart = () => {
 
 			const result: ITestResult[] = await res.json()
 			setData(result)
+			setLoading(false)
 		}
 
 		fetchData()
 	}, [])
 
 	return (
-		<Layout>
+		<Layout loading={loading}>
 			<SnackbarAlert
 				open={openSnackbar}
 				message="Brak autoryzacji"

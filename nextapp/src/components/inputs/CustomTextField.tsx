@@ -17,8 +17,10 @@ interface ITextFieldProps {
 	rows?: number
 	name?: string
 	margin?: string
+	required?: boolean
 	children?: React.ReactNode
 	value?: string | boolean | number
+	errors?: any
 }
 
 export const CustomTextField = (props: ITextFieldProps) => {
@@ -34,6 +36,9 @@ export const CustomTextField = (props: ITextFieldProps) => {
 			value={props.value}
 			multiline={props.multiline}
 			rows={props.rows}
+			required={props.required ?? true}
+			error={props.errors}
+			helperText={props.errors}
 			style={{
 				backgroundColor: props.backgroundColor ?? "#d7d7e3",
 				borderRadius: props.borderRadius ?? "20px",
@@ -43,6 +48,13 @@ export const CustomTextField = (props: ITextFieldProps) => {
 				fontSize: props.fontSize ?? "14px",
 				color: "#303030",
 				boxShadow: props.boxShadow ?? "0px 4px 10px rgba(0, 0, 0, 0.1)",
+			}}
+			sx={{
+				"& .MuiInputBase-input": {
+					textAlign: "center",
+					fontFamily: "Ubuntu, sans-serif",
+					fontSize: props.fontSize ?? "14px",
+				},
 			}}
 			slotProps={{
 				input: { disableUnderline: true },

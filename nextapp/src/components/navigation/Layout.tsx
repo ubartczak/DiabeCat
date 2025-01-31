@@ -1,8 +1,14 @@
 import React from "react"
 import { Box, Typography } from "@mui/material"
 import Header from "./Header"
+import MainContent from "./MainContent"
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+interface ILayoutProps {
+	children: React.ReactNode
+	loading: boolean
+}
+
+const Layout = ({ children, loading }: ILayoutProps) => {
 	return (
 		<div style={{ margin: 0, padding: 0 }}>
 			<Box
@@ -14,17 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 				}}
 			>
 				<Header />
-				<main
-					style={{
-						borderRadius: "20px",
-						overflow: "hidden",
-						boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-						backgroundColor: "white",
-						padding: "24px",
-					}}
-				>
-					{children}
-				</main>
+				<MainContent children={children} loading={loading} />
 				<footer
 					style={{
 						textAlign: "center",
