@@ -1,6 +1,5 @@
 import Layout from "@/components/navigation/Layout"
 import {
-	Alert,
 	Box,
 	Card,
 	CardActions,
@@ -10,12 +9,10 @@ import {
 	Collapse,
 	IconButton,
 	Typography,
-	TextField,
 	Button,
 	Dialog,
 	DialogTitle,
 	DialogContent,
-	DialogContentText,
 	DialogActions,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
@@ -23,6 +20,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { MyButton } from "@/components/inputs/CustomButton"
 import { CustomTextField } from "@/components/inputs/CustomTextField"
+import UploadForm from "@/components/images/UploadForm"
 
 interface News {
 	_id: string
@@ -44,6 +42,10 @@ const Dashboard = () => {
 		content: "",
 		imgSrc: "",
 	})
+
+	const handleImageUpload = (url: string) => {
+		setNewNews((prev) => ({ ...prev, imgSrc: url }))
+	}
 
 	const [open, setOpen] = useState(false)
 
@@ -77,6 +79,11 @@ const Dashboard = () => {
 	}
 
 	const handleAddNews = async () => {
+		if (!newNews.imgSrc) {
+			alert("Dodaj zdjęcie przed zapisaniem newsa!")
+			return
+		}
+
 		const response = await axios.post("/api/news/saveNews", newNews)
 
 		if (response.status === 201) {
@@ -88,6 +95,7 @@ const Dashboard = () => {
 				imgSrc: "",
 			})
 			fetchNews()
+			handleClose()
 		}
 	}
 
@@ -99,7 +107,14 @@ const Dashboard = () => {
 
 	return (
 		<Layout loading={loading}>
-			<MyButton text="dodaj news" onClick={handleClickOpen} />
+			<Box sx={{ display: "flex", justifyContent: "space-between" }}>
+				<h2>Aktualności</h2>
+				<MyButton
+					text="dodaj news"
+					onClick={handleClickOpen}
+					margin="20px"
+				/>
+			</Box>
 			<Dialog
 				open={open}
 				onClose={handleClose}
@@ -110,6 +125,7 @@ const Dashboard = () => {
 					{"dodaj newsa"}
 				</DialogTitle>
 				<DialogContent>
+					<UploadForm onUploadSuccess={handleImageUpload} />
 					<form noValidate>
 						<Box sx={{ width: "100%" }}>
 							<label htmlFor="title" style={labelStyle}>
@@ -156,17 +172,6 @@ const Dashboard = () => {
 								rows={4}
 							/>
 						</Box>
-						<Box sx={{ width: "100%" }}>
-							<label htmlFor="imgSrc" style={labelStyle}>
-								źródło obrazu
-							</label>
-							<CustomTextField
-								id="imgSrc"
-								name="imgSrc"
-								value={newNews.imgSrc}
-								onChange={handleInputChange}
-							/>
-						</Box>
 					</form>
 				</DialogContent>
 				<DialogActions>
@@ -176,11 +181,14 @@ const Dashboard = () => {
 					<Button onClick={handleClose}>anuluj</Button>
 				</DialogActions>
 			</Dialog>
-			<Alert variant="outlined" severity="success">
-				Witaj na stronie głównej. Wybierz jedną z opcji w górnym menu.
-			</Alert>
 			<Box>
-				<h2>Aktualności</h2>
+				<h4>
+					Witaj na stronie głównej. Sprawdź nasze aktualności lub
+					wybierz opcję z górnego menu.
+				</h4>
+			</Box>
+
+			<Box>
 				{newsList.map((news) => (
 					<Card key={news._id} sx={{ my: 2 }}>
 						<CardHeader
