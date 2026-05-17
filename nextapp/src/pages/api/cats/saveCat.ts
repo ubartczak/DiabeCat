@@ -21,8 +21,9 @@ const saveCat = async (req: AuthenticatedRequest, res: NextApiResponse) => {
 		microchipNumber,
 		fur,
 		specialSigns,
-		email,
 	} = req.body
+
+	const email = req.user?.email
 
 	if (
 		!name ||
