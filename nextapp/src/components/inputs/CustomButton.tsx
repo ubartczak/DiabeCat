@@ -7,6 +7,8 @@ interface IButtonProps {
 	children?: React.ReactNode
 	backgroundColor?: string
 	textColor?: string
+	padding?: string
+	margin?: string
 	disabled?: boolean
 	fullWidth?: boolean
 	disableTouchRipple?: boolean
@@ -31,6 +33,8 @@ export const MyButton = (props: IButtonProps) => {
 				color: props.textColor,
 				fontFamily: "Ubuntu, sans-serif",
 				textTransform: "none",
+				padding: props.padding,
+				margin: props.margin,
 			}}
 			variant={props.variant || "contained"}
 			size={props.size || "small"}
