@@ -1,7 +1,7 @@
 import User from "@/models/User"
 import dbConnect from "@/utils/dbConnect"
 import type { NextApiRequest, NextApiResponse } from "next"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 const register = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method !== "POST") {
